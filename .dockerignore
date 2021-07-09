@@ -1,6 +1,13 @@
-.git
-node_modules
-npm-debug
+**/.vscode
+**/.github
+**/.git
+**/.gitignore
+**/Dockerfile*
+**/.dockerignore
+**/node_modules
+**/npm-debug.log
+**/.env
 
-packages/runner/db
+packages/runner/db/*
+!packages/runner/db/ckb-indexer-testnet
 packages/runner/temp-db
