@@ -28,9 +28,15 @@ async function checkStatus(blockDifference = 3): Promise<Boolean> {
   return Promise.resolve(false);
 }
 
-let timeID = setInterval(checkStatus, 6666);
-setTimeout(() => {
-  console.log("stop and exit")
+let timeID = setInterval(async () => {
+  if (await checkStatus() === true) {
+    exit();
+  }
+}, 6666);
+setTimeout(exit, (Number(process.env.MIN) || 6) * 60 * 1000);
+
+function exit() {
+  console.log("exit");
   clearInterval(timeID);
   process.exit(0);
-}, 666666);
+}

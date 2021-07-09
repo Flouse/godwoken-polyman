@@ -18,13 +18,27 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
     - run: yarn
     - name: Cache Testnet Indexer Data
+      id: indexer-cache
       uses: actions/cache@v2
       with:
-        path: packages/runner/db/ckb-indexer-testnet
+        path: |
+          packages/runner/db/ckb-indexer-testnet
+          packages/runner/db/backup
         key: Aggron
+        # restore-keys: |
+        #   Aggron-datetime
+    - name: Download nervos-ckb-indexer-testnet-snapshot
+      if: steps.indexer-cache.outputs.cache-hit != 'true'
+      run: |
+        curl -LO https://s3.amazonaws.com/cdn.ckb.tools/snapshots/20210704-nervos-ckb-indexer-testnet-snapshot.7z
+        sudo apt install p7zip-full -y
+        mkdir -p packages/runner/db/ckb-indexer-testnet
+        7z x 20210704-nervos-ckb-indexer-testnet-snapshot.7z -opackages/runner/db/ckb-indexer-testnet
+        ls packages/runner/db
+        ls packages/runner/db/ckb-indexer-testnet
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: yarn sync-indexer
+      run: MIN=1 yarn sync-indexer
 
 
     # - name: Build the Docker image
