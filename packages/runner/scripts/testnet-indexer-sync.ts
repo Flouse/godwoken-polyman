@@ -33,7 +33,7 @@ let timeID = setInterval(async () => {
     exit();
   }
 }, 6666);
-setTimeout(exit, 1 * 60 * 1000);
+setTimeout(exit, (Number(process.env.MIN) || 6) * 60 * 1000);
 
 function exit() {
   console.log("exit");

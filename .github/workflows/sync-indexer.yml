@@ -38,7 +38,7 @@ jobs:
         ls packages/runner/db/ckb-indexer-testnet
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: yarn sync-indexer
+      run: MIN=1 yarn sync-indexer
 
 
     # - name: Build the Docker image
