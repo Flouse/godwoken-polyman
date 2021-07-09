@@ -4,6 +4,9 @@ on:
   push:
     branches: [ testnet-polyjuice-api-image ]
 
+env:
+  IMAGE_NAME: testnet-polyjuice-api
+
 jobs:
   sync-testnet-indexer:
     runs-on: ubuntu-latest
@@ -38,8 +41,52 @@ jobs:
         ls packages/runner/db/ckb-indexer-testnet
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: MIN=1 yarn sync-indexer
+      run: MIN=0.3 yarn sync-indexer
 
-
-    # - name: Build the Docker image
-    #   run: docker build . --file Dockerfile --tag testnet-polyjuice-api:$(date +%s)
+  # # Push image to GitHub Packages
+  # build-and-push-image:
+  #   # Ensure test job passes before pushing image.
+  #   # TODO
+  #   # needs: sync-testnet-indexer
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Cache Testnet Indexer Data
+  #       id: indexer-cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           packages/runner/db/ckb-indexer-testnet
+  #           packages/runner/db/backup
+  #         key: Aggron
+  #     - name: Build image
+  #       run: docker build . --file Dockerfile.api --tag $IMAGE_NAME
+  #       # restore-keys: |
+  #       #   Aggron-datetime
+  #     - name: Login GitHub Container Registry
+  #       uses: docker/login-action@v1
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.CR_PAT }} # Should create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT` first
+  #     - run: docker images
+  #     # push image
+  #     - name: Push image to GitHub Container Registry
+  #       run: |
+  #         IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+  #         # Change all uppercase to lowercase
+  #         IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+  #         # Strip git ref prefix from version
+  #         VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+  #         # Strip "v" prefix from tag name
+  #         [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+  #         TIME_TAG=$(date +%F_%H%M)
+  #         echo IMAGE_ID=$IMAGE_ID
+  #         echo VERSION=$VERSION
+  #         echo TIME_TAG=$TIME_TAG
+  #         docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+  #         docker push $IMAGE_ID:$VERSION
+  #         docker tag $IMAGE_NAME $IMAGE_ID:$TIME_TAG
+  #         docker push $IMAGE_ID:$TIME_TAG
+  #         docker tag $IMAGE_NAME $IMAGE_ID:latest
+  #         docker push $IMAGE_ID:latest

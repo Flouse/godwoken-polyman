@@ -15,8 +15,6 @@ COPY packages/runner/package*.json ./packages/runner/
 
 RUN yarn install
 
-# TODO: testnet indexer sync
-
 COPY . ./
 
 EXPOSE 6100

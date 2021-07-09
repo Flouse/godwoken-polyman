@@ -1,0 +1,26 @@
+FROM node:14-buster
+
+# ENV NODE_ENV=production
+
+WORKDIR /godwoken-polyman
+
+# COPY ["package.json", "packages/*/package.json", "yarn.lock", "./"]
+COPY package*.json ./
+# TODO no clinet packages?
+COPY packages/client/package*.json ./packages/client/
+COPY packages/godwoken/package*.json ./packages/godwoken/
+COPY packages/polyjuice/package*.json ./packages/polyjuice/
+COPY packages/runner/package*.json ./packages/runner/
+
+# TODO: yarn --prod --silent && && mv node_modules ../
+RUN yarn install
+
+COPY . .
+# testnet indexer sync
+RUN cd packages/runner && MIN=0.2 yarn sync-indexer
+
+RUN whoami
+
+EXPOSE 6101
+WORKDIR /godwoken-polyman/packages/runner
+CMD ["node", "--version"]
