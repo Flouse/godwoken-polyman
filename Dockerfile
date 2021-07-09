@@ -1,4 +1,4 @@
-FROM nervos/godwoken-prebuilds:v0.2.0-rc2
+FROM nervos/godwoken-js-prebuilds:v0.3.1-rc3
 
 WORKDIR "/godwoken-polyman"
 
@@ -12,12 +12,15 @@ COPY packages/client/package*.json ./packages/client/
 COPY packages/godwoken/package*.json ./packages/godwoken/
 COPY packages/polyjuice/package*.json ./packages/polyjuice/
 COPY packages/runner/package*.json ./packages/runner/
-Run yarn install
+
+RUN yarn install
+
+# TODO: testnet indexer sync
 
 COPY . ./
 
 EXPOSE 6100
-EXPOSE 6100
+EXPOSE 6101
 
 USER node
 CMD ["node", "version"]

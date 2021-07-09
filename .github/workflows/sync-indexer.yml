@@ -1,0 +1,31 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ testnet-polyjuice-api-image ]
+
+jobs:
+  sync-testnet-indexer:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node_modules
+      uses: actions/cache@v2
+      with:
+        path: |
+          node_modules
+          packages/*/node_modules
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+    - run: yarn
+    - name: Cache Testnet Indexer Data
+      uses: actions/cache@v2
+      with:
+        path: packages/runner/db/ckb-indexer-testnet
+        key: Aggron
+    - name: Testnet Indexer Sync
+      working-directory: packages/runner
+      run: yarn sync-indexer
+
+
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag testnet-polyjuice-api:$(date +%s)
