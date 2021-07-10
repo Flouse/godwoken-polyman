@@ -29,9 +29,9 @@ jobs:
         path: |
           packages/runner/db/ckb-indexer-testnet
           packages/runner/db/backup
-        key: Aggron
-        # restore-keys: |
-        #   Aggron-datetime
+        key: Aggron-${{ hashFiles('packages/runner/db/ckb-indexer-testnet/*') }}
+        restore-keys: |
+          Aggron
     - name: Download nervos-ckb-indexer-testnet-snapshot
       if: steps.indexer-cache.outputs.cache-hit != 'true'
       run: |
@@ -43,7 +43,7 @@ jobs:
         ls packages/runner/db/ckb-indexer-testnet
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: MIN=20 yarn sync-indexer
+      run: MIN=0.2 yarn sync-indexer
 
   # # Push image to GitHub Packages
   build-and-push-image:
