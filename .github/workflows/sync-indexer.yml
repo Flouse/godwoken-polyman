@@ -58,7 +58,7 @@ jobs:
             packages/runner/db/backup
           key: Aggron
       - name: Build image
-        run: docker build . --file Dockerfile.api --tag $IMAGE_NAME:$(date +%s)
+        run: docker build . --file Dockerfile.api --tag $IMAGE_NAME:$(date +%F_%H%M)
         # restore-keys: |
         #   Aggron-datetime
       # - name: Login GitHub Container Registry

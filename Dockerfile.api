@@ -1,6 +1,5 @@
-FROM nervos/godwoken-js-prebuilds:v0.3.1-rc3
+FROM node:14-buster
 
-# TODO
 # ENV NODE_ENV=production
 
 WORKDIR /godwoken-polyman
@@ -18,7 +17,7 @@ RUN yarn install
 
 COPY . .
 # testnet indexer sync
-RUN cd packages/runner && MIN=0.1 yarn sync-indexer
+RUN cd packages/runner && MIN=0.2 yarn sync-indexer
 
 RUN whoami
 
