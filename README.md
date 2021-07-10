@@ -84,7 +84,7 @@ Note: The `account-cli` tool uses a builtin CKB Indexer, which needs to fully sy
 docker run --rm \
   -v`pwd`/db/ckb-indexer-testnet:/ckb-indexer-testnet \
   ghcr.io/flouse/testnet-polyjuice-api:latest bash -c \
-  "cp /godwoken-polyman/packages/runner/db/ckb-indexer-testnet/* /ckb-indexer-testnet/"
+  "cp /godwoken-polyman/packages/runner/db/ckb-indexer-testnet/* packages/runner/db/ckb-indexer-testnet/"
 sudo chown -R `whoami` db/ckb-indexer-testnet/
 ```
 2. Download testnet indexer snapshot data from [Amazon S3](https://github.com/RetricSu/gw-gitcoin-instruction/blob/8c02c1584d527fca24f983dc33d19b6bb765b1f8/src/component-tutorials/12.using.snapshot.data.with.account.cli.md)
