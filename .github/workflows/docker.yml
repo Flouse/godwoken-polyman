@@ -42,11 +42,10 @@ jobs:
             packages/runner/db/backup
           key: Aggron
       
-      - name: Download nervos-ckb-indexer-testnet-snapshot
+      - name: Copy the testnet indexer data from testnet-polyjuice-api:latest docker image
         if: steps.indexer-cache.outputs.cache-hit != 'true'
         working-directory: packages/runner
         run: |
-          # docker pull ghcr.io/flouse/testnet-polyjuice-api:latest
           docker run --rm -v`pwd`/db/ckb-indexer-testnet:/ckb-indexer-testnet ghcr.io/flouse/testnet-polyjuice-api bash -c "cp /godwoken-polyman/packages/runner/db/ckb-indexer-testnet/* /ckb-indexer-testnet/"
           ls db
           ls db/ckb-indexer-testnet
