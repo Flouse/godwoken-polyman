@@ -4,7 +4,6 @@ FROM node:14-buster
 
 WORKDIR /godwoken-polyman
 
-# COPY ["package.json", "packages/*/package.json", "yarn.lock", "./"]
 COPY package*.json ./
 # TODO no clinet packages?
 COPY packages/client/package*.json ./packages/client/
