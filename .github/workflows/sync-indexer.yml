@@ -24,6 +24,8 @@ jobs:
 
     - run: yarn
 
+    - name: Set the datetime
+      run: echo "DATETIME=$(date +%F_%H)" >> $GITHUB_ENV
     - name: Cache Testnet Indexer Data
       id: indexer-cache
       uses: actions/cache@v2
@@ -31,10 +33,11 @@ jobs:
         path: |
           packages/runner/db/ckb-indexer-testnet
           packages/runner/db/backup
-        key: Aggron-${{ hashFiles('packages/runner/db/ckb-indexer-testnet/*') }}
-        restore-keys: |
-          Aggron
+        key: Aggron-${{ env.DATETIME }}
+        # restore-keys: |
+        #   Aggron-
 
+    # FIXME: don't copy if cached restored
     - name: Copy the testnet indexer data from testnet-polyjuice-api:latest docker image
       if: steps.indexer-cache.outputs.cache-hit != 'true'
       working-directory: packages/runner
@@ -43,7 +46,7 @@ jobs:
 
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: MIN=0.2 yarn sync-indexer
+      run: MIN=20 yarn sync-indexer
 
   # Push image to GitHub Packages
   build-and-push-image:
