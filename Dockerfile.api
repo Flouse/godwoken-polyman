@@ -12,6 +12,10 @@ COPY packages/godwoken/package*.json ./packages/godwoken/
 COPY packages/polyjuice/package*.json ./packages/polyjuice/
 COPY packages/runner/package*.json ./packages/runner/
 
+# testnet config
+ADD https://github.com/nervosnetwork/godwoken-examples/raw/develop/packages/tools/configs/testnet-godwoken-config.json packages/runner/configs/godwoken-config.json
+ADD https://github.com/nervosnetwork/godwoken-examples/raw/develop/packages/tools/configs/testnet-scripts-deploy-result.json packages/runner/configs/scripts-deploy-result.json
+
 # TODO: yarn --prod --silent && && mv node_modules ../
 RUN yarn install
 
@@ -19,6 +23,7 @@ COPY . .
 # testnet indexer sync
 RUN cd packages/runner && MIN=0.2 yarn sync-indexer
 
+# TODO: use non-root user
 RUN whoami
 
 EXPOSE 6101
