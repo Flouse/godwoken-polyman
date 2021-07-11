@@ -47,8 +47,7 @@ jobs:
         working-directory: packages/runner
         run: |
           docker run --rm -v`pwd`/db/ckb-indexer-testnet:/ckb-indexer-testnet ghcr.io/flouse/testnet-polyjuice-api bash -c "cp /godwoken-polyman/packages/runner/db/ckb-indexer-testnet/* /ckb-indexer-testnet/"
-          ls db
-          ls db/ckb-indexer-testnet
+          sudo chown -R $(whoami) db/ckb-indexer-testnet
 
       # TODO: MIN=20 yarn sync-indexer
 
