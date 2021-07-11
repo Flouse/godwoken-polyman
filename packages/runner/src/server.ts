@@ -411,8 +411,8 @@ export async function start() {
         miner_private_key,
         miner_ckb_address,
     );
-    app.listen( serverConfig.server_port, () => {
-        console.log( `api server started at http://localhost:${ serverConfig.server_port }` );
-    } );
+    app.listen(process.env.PORT || serverConfig.server_port, () => {
+      console.log(`api server started at http://localhost:${serverConfig.server_port}`);
+    });
     return;
 }
