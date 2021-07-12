@@ -130,9 +130,10 @@ const setUpRouters = (
     
     app.get( "/deposit", async ( req, res ) => {
         try {
-            const eth_address = req.query.eth_address + '';
+            const eth_address = req.query.eth_address || '';
+            const privKey = req.query.privKey || user_private_key;
             await api.syncToTip();
-            const account_id = await api.deposit(user_private_key, eth_address, default_deposit_amount);
+            const account_id = await api.deposit(privKey.toString(), eth_address.toString(), default_deposit_amount);
             console.log(account_id);
             res.send({status:'ok', data: {eth_address: eth_address, account_id: account_id}});
         } catch (error) {

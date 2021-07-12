@@ -163,7 +163,7 @@ export class Api {
 
     console.log("waiting for sync ...");
     await this.indexer.waitForSync();
-    console.log("synced ...");
+    console.log("synced");
   }
 
   async syncToTip(){
