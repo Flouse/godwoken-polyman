@@ -382,7 +382,7 @@ export async function start() {
 
     // start a polyjuice chain
     try {
-        await api.syncToTip();
+        api.syncToTip();
         const createCreatorId = await api.findCreateCreatorAccoundId(sudt_id_str);
         if(createCreatorId === null){
             const from_id = await api.deposit(user_private_key, undefined, default_deposit_amount);
