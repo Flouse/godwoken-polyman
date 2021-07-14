@@ -106,7 +106,7 @@ export class Api {
   }
 
   public get isTestnet() : Boolean {
-    return this.ckb_rpc_url.includes("testnet.ckb.dev");
+    return process.env.MODE === "testnet" || this.ckb_rpc_url.includes("testnet.ckb.dev");
   }
 
   /**
