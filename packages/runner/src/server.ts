@@ -400,6 +400,7 @@ export async function start() {
             console.log(`polyjuice chain already exits, skip createCreatorAccount.`);
         }
     } catch (e) {
+        console.error("faild to start server:", e);
         throw new Error(e);
     }
 
