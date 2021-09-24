@@ -50,7 +50,7 @@ jobs:
 
     - name: Testnet Indexer Sync
       working-directory: packages/runner
-      run: MIN=20 yarn sync-indexer
+      run: MIN=40 yarn sync-indexer
 
     - name: Build image
       run: |
