@@ -87,7 +87,7 @@ docker run --rm \
   "cp /godwoken-polyman/packages/runner/db/ckb-indexer-testnet/* packages/runner/db/ckb-indexer-testnet/"
 sudo chown -R `whoami` packages/runner/db/ckb-indexer-testnet/
 ```
-2. Download testnet indexer snapshot data from [Amazon S3](https://github.com/RetricSu/gw-gitcoin-instruction/blob/8c02c1584d527fca24f983dc33d19b6bb765b1f8/src/component-tutorials/12.using.snapshot.data.with.account.cli.md)
+2. Download testnet indexer snapshot data from a [Bootstrap](https://ckb.tools/bootstrap) of CKB.tools.
 
 And then, start the API service with `testnet` mode without [UI](packages/runner/src/ui.ts).
 
